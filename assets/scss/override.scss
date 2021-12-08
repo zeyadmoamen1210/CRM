@@ -9,3 +9,7 @@ a{
     text-decoration: none !important;
     display: block !important;
 }
+
+.el-select-dropdown.el-popper{
+  z-index: 9999999999 !important;
+}
