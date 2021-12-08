@@ -216,7 +216,7 @@
 
 
 
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <div>
                                 <h6 class="add-new-company-page__label">Description</h6>
                                 <el-form-item
@@ -226,6 +226,28 @@
                                     ]"
                                 >
                                     <el-input v-model="addCompanyInfo.description"></el-input>
+                                </el-form-item>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div>
+                                <h6 class="add-new-company-page__label">Sectors</h6>
+                                <el-form-item
+                                    prop="sector"
+                                    :rules="[
+                                        { required: true, message: 'sector is required'},
+                                    ]"
+                                >
+                                    <el-select v-model="addCompanyInfo.sector" placeholder="Select">
+                                        <el-option
+                                        v-for="item in sectors"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item.id">
+                                        </el-option>
+                                    </el-select>
                                 </el-form-item>
                             </div>
                         </div>
@@ -268,15 +290,98 @@ export default {
             url: ""
         }
     },
+    mounted(){
+        this.getSectors();
+    },
     methods:{
-        submitCompanyInfo(formName){
-            // this.$refs[formName].validate((valid) => {
-            //     if (valid) {
+        getSectors(){
+            const loading = this.$loading({
+                lock: true,
+                text: false,
+                spinner: "el-icon-loading",
+                background: "rgba(255,255,255,.7)",
+                customClass: "fullscreen-loading",
+            });
 
-            //     }else{
-            //         }
-            // })
-                    this.$router.push(`/new-contact`);
+            this.$axios.get(`/sectors`).then(res => {
+                this.sectors = res.data;
+            }).finally(() => loading.close());
+        },
+        submitCompanyInfo(formName){
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.addCompany();
+                }else{
+                    }
+            })
+                    // this.$router.push(`/new-contact`);
+        },
+        addCompany(){
+
+             const loading = this.$loading({
+                lock: true,
+                text: false,
+                spinner: "el-icon-loading",
+                background: "rgba(255,255,255,.7)",
+                customClass: "fullscreen-loading",
+            });
+
+            let formData = new FormData();
+            if(this.photo && this.url){
+                formData.append('photos' , this.photo)
+            }
+            let photoJson = '';
+            let getPhotoJson = this.$axios.post('/photos', formData).then(res => {
+                photoJson = res.data[0].url;
+            }).catch((err) => {
+                this.$vs.notification({
+                        progress: "auto",
+                        color: "danger",
+                        position: "top-center",
+                        text: `There Are Something Wrong In Upload Logo`,
+                });
+                loading.close();
+            });
+            
+            Promise.all([getPhotoJson]).then(() => {
+                this.$axios.post('/companies', {
+                    name: this.addCompanyInfo.name,
+                    email: this.addCompanyInfo.email,
+                    phone: this.addCompanyInfo.phone,
+                    website: this.domainForm.domain,
+                    description: this.addCompanyInfo.description,
+                    sector: this.addCompanyInfo.sector,
+                    socialMedia: [
+                        {name: 'facebook', link: this.addCompanyInfo.facebookUrl},
+                        {name: 'twitter', link: this.addCompanyInfo.twitterUrl},
+                        {name: 'linkedIn', link: this.addCompanyInfo.linkedInUrl},
+                        {name: 'youtube', link: this.addCompanyInfo.youtubeUrl},
+                    ],
+                    logo: photoJson
+                }).then(() => {
+                    this.$vs.notification({
+                        progress: "auto",
+                        color: "success",
+                        position: "top-center",
+                        text: `Company Information Saved Successfully`,
+                    });
+                    this.$router.push(`/new-contact?company=${res.data.id}`);
+                }).catch(err => {
+                   
+                   if(err.response.status == 400) {
+                       this.$vs.notification({
+                            progress: "auto",
+                            color: "danger",
+                            position: "top-center",
+                            text: `Phone Number Invalid`,
+                        });
+                   }
+
+                   
+                })
+                .finally(() => loading.close())
+            })
+            
         },
         uploadImg(e){
             if(e.target.files.length > 0){
@@ -287,13 +392,32 @@ export default {
         submitForm(formName){
             this.$refs[formName].validate((valid) => {
                 if (valid){
-                    // this.sendDomain()
-                    this.checkForNextStep = true;
-                    this.companyAvailable = true;
+                    this.sendDomain()
+                    // this.checkForNextStep = true;
+                    // this.companyAvailable = true;
 
                 }
             })
-        }
+        },
+        sendDomain(){
+            const loading = this.$loading({
+                lock: true,
+                text: false,
+                spinner: "el-icon-loading",
+                background: "rgba(255,255,255,.7)",
+                customClass: "fullscreen-loading",
+            });
+            this.$axios.get(`/companies?website=${this.domainForm.domain}`).then(res => {
+                if(res.data.docs.length == 0){
+                    this.nextStep = true;
+                }
+            }).catch(err => {
+                if (err.response.status == 400) {
+                    this.nextStep = true;
+                }
+            })
+            .finally(() => loading.close())
+        },
     }
 }
 </script>

@@ -47,11 +47,11 @@
                     <div class="navbar-component__user">
                         <div class="d-flex justify-content-arround">
                             <div>
-                                <img src="@/assets/imgs/user.png" alt="">
+                                <img :src="user.profile" alt="">
                             </div>
                             <div>
-                                <h6>Zeyad moamen</h6>
-                                <span>Sales </span>
+                                <h6> {{ user.name }} </h6>
+                                <span> {{user.role}} </span>
                             </div>
                         </div>
                     </div>
@@ -72,9 +72,20 @@
 
 <script>
 export default {
+    mounted(){
+        this.getUserProfile();
+    },
+    methods:{
+        getUserProfile(){
+            if(localStorage.getItem('CRMDashboardUser')){
+                this.user = JSON.parse(localStorage.getItem('CRMDashboardUser'));
+            }
+        }
+    },
     data(){
         return{
-            navbarSearch: ""
+            navbarSearch: "",
+            user: {}
         }
     }
 }
@@ -138,13 +149,18 @@ export default {
             box-shadow: 0 4px 25px 0 #726e6e1a;
             h6{
                 margin-bottom: 0;
-                padding-top: 2px;
+                padding-top: 4px;
+            }
+            span{
+                font-size:13px
             }
         }
         img{
             border-radius: 50%;
-            width: 46px;
-            border: 1px solid var(--color-primary);
+            width: 50px;
+            border: 1px solid #ffcb0538;
+            height: 50px;
+            padding: 4px;
         }
     }
 }

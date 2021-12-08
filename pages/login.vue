@@ -32,7 +32,6 @@
                   prop="email"
                 >
                   <el-input
-                    type="password"
                     v-model="loginData.email"
                     autocomplete="off"
                   ></el-input>
@@ -70,17 +69,13 @@ export default {
       loginData: {},
     };
   },
+  middleware:['loggedIn'],
+  auth: false,
   methods: {
 
     submitForm(formName) {
 
-        const loading = this.$loading({
-            lock: true,
-            text: false,
-            spinner: "el-icon-loading",
-            background: "rgba(255,255,255,.7)",
-            customClass: "fullscreen-loading",
-        });
+        
 
 
         this.$refs[formName].validate((valid) => {
@@ -91,12 +86,40 @@ export default {
     },
 
     login(){
+      const loading = this.$loading({
+            lock: true,
+            text: false,
+            spinner: "el-icon-loading",
+            background: "rgba(255,255,255,.7)",
+            customClass: "fullscreen-loading",
+        });
+
         this.$auth.loginWith("local", {
-                data: {
-                    phone: this.loginData.email,
-                    password: this.loginForm.password
-                }
-        })
+          data: {
+              email: this.loginData.email,
+              password: this.loginData.password
+          }
+        }).then(response => {
+          this.$auth.setUser(response.data.user);
+          localStorage.setItem(
+            "CRMDashboardUser",
+            JSON.stringify(response.data.user)
+          );
+          this.$vs.notification({
+            progress: "auto",
+            color: "success",
+            position: "top-center",
+            text: `Welcome Back ${response.data.user.name}`,
+          });
+          this.$router.push('/');
+        }).catch((err) => {
+          this.$vs.notification({
+            progress: "auto",
+            color: "danger",
+            position: "top-center",
+            text: `Invalid Email Or Password`,
+          });
+        }).finally(() => loading.close())
     }
 
 

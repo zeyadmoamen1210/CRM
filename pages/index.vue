@@ -47,7 +47,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-4" v-for="i in 30" :key="i">
+                <div class="col-md-4" v-for="company in companies" :key="company.id">
                   <section
                     @click="$router.push(`/company/${i}`)"
                     class="company-card d-flex flex-wrap"
@@ -108,12 +108,18 @@
               <div class="row">
                 <div class="col-md-6">
                   <div>
+                    
+                    <client-only>
+
                     <VueApexCharts
                       ref="profits"
                       type="radialBar"
                       :options="chartOptions"
                       :series="series"
                     ></VueApexCharts>
+
+                    </client-only>
+                  
                   </div>
                 </div>
               </div>
@@ -127,9 +133,29 @@
 
 <script>
 export default {
-  
+  // mounted(){
+  //   window.setTimeout(() => {
+  //     this.$refs.profits.render()
+
+  //   }, 1000)
+  // },
+  mounted(){
+    this.getCompaines();
+  },
+  methods:{
+    getCompaines(){
+      this.$axios.get(`/companies`).then(res => {
+        this.companies = res.data.docs;
+        this.companiesPage = res.data.page;
+        this.companiesTotalPages = res.data.totalPages;
+      }).finally(() => loading.close());
+    }
+  },
   data() {
     return {
+      companies: [],
+      companiesPage: 1,
+      companiesTotalPages: 1,
       series: [67, 84, 97, 61, 65, 15],
 
       chartOptions: {

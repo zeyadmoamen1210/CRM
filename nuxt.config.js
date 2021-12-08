@@ -47,7 +47,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseUrl: "https://be.dev.bassthalk.com/api/v1"
+    baseUrl: "https://hive.shout-out.website/"
   },
 
 
@@ -59,8 +59,8 @@ export default {
           property: ""
         },
         endpoints: {
-          login: { url: "/login-phone", method: "post" },
-          user: { url: "profile", method: "get" },
+          login: { url: "/auth/signin", method: "post" },
+          user: false,
           logout: false
         },
         token: {
@@ -76,9 +76,9 @@ export default {
     }
   },
 
-  // router: {
-  //   middleware: ["auth"]
-  // },
+  router: {
+    middleware: ["auth"]
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
