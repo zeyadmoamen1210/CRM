@@ -12,11 +12,12 @@
                         <el-input
                             placeholder="Search"
                             prefix-icon="el-icon-search"
+                            @keyup.enter.native="searchInCompanies"
                             v-model="navbarSearch">
                         </el-input>
                     </div>
 
-                    <div class="navbar-component__icons">
+                    <!-- <div class="navbar-component__icons">
                         <div class="d-flex">
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 18 18">
@@ -43,7 +44,7 @@
                                 </svg>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="navbar-component__user">
                         <div class="d-flex justify-content-arround">
                             <div>
@@ -80,7 +81,11 @@ export default {
             if(localStorage.getItem('CRMDashboardUser')){
                 this.user = JSON.parse(localStorage.getItem('CRMDashboardUser'));
             }
-        }
+        },
+        searchInCompanies(){
+
+            this.$router.push(`/?company=${this.navbarSearch}`); 
+        },
     },
     data(){
         return{

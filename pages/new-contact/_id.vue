@@ -1,64 +1,40 @@
 <template>
-  <div class="add-new-company-page">
+  <div class="add-new-contact-page">
       <div class="container">
           <section>
-
-            <div class="new-company-header">
-                <h3> Add New Company </h3>
-            </div>
-
-            <div class="add-new-company-page__breadcrumbs">
-                <div>
-                    <nuxt-link to="/">Home</nuxt-link>
-                </div>
-                <div>
-                    <h6> 
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="10" height="10" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path xmlns="http://www.w3.org/2000/svg" d="m6.293 22.707a1 1 0 0 1 0-1.414l9.293-9.293-9.293-9.293a1 1 0 0 1 1.414-1.414l10 10a1 1 0 0 1 0 1.414l-10 10a1 1 0 0 1 -1.414 0z" fill="#707070" data-original="#000000" class=""/></g></svg>
-                    </h6>
-                </div>
-                <div>
-                    <h6 class="mb-0"> Add New Company </h6>
-                </div>
-            </div>
-            
-
-
-            <section v-if="!nextStep" class="mt-4 add-new-company-page__domain-step">
-                <div class="mb-5 add-new-company-page__title">
-                    <h6> Write Company Domain To Check. </h6>
+                <div class="new-contact-header">
+                    <h3> Add New Contact </h3>
                 </div>
 
-                <el-form :model="domainForm" ref="domainForm">
-                    <h6 class="add-new-company-page__domain-label">Company Domain</h6>
-                    <el-form-item
-                        prop="domain"
-                        :rules="[
-                            { required: true, message: 'domain is required'},
-                        ]"
-                    >
-                        <el-input v-model="domainForm.domain"></el-input>
-                    </el-form-item>
-
-                    <el-form-item>
-                        <el-button type="primary" @click.prevent="submitForm('domainForm')">CHECK</el-button>
-                    </el-form-item>
-                </el-form>
-            </section>
+                <div class="add-new-contact-page__breadcrumbs">
+                    <div>
+                        <nuxt-link to="/">Home</nuxt-link>
+                    </div>
+                    <div>
+                        <h6> 
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="10" height="10" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path xmlns="http://www.w3.org/2000/svg" d="m6.293 22.707a1 1 0 0 1 0-1.414l9.293-9.293-9.293-9.293a1 1 0 0 1 1.414-1.414l10 10a1 1 0 0 1 0 1.414l-10 10a1 1 0 0 1 -1.414 0z" fill="#707070" data-original="#000000" class=""/></g></svg>
+                        </h6>
+                    </div>
+                    <div>
+                        <h6 class="mb-0"> Add New Company </h6>
+                    </div>
+                </div>
 
 
-
-
-            <section v-else class="mt-4 add-new-company-page__company-info">
-                
-
-                <el-form :model="addCompanyInfo" ref="addCompanyInfo">
+                <div class="mt-5">
+                    <h4> You can add contact for this copmany right now ! </h4>
+                </div>
 
 
 
-                    <div class="add-new-company-page__upload-img">
+                <el-form :model="addContactInfo" ref="addContactInfo">
+
+
+
+                    <div class="add-new-contact-page__upload-img mt-4 mb-5">
                         <div class="d-flex flex-wrap">
 
-                            <div class="add-new-company-page__img">
+                            <div class="add-new-contact-page__img">
                                 <input @change="uploadImg" type="file">
                                 <svg v-if="!url" xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 44.124 36.246">
                                     <g id="noun-upload-photos-4187203" transform="translate(-80.035 -78.738)">
@@ -69,11 +45,11 @@
                             </div>
 
                             <div>
-                                <h6 >Upload Company Logo</h6>
+                                <h6 class="mt-2 header">Contact person profile photo</h6>
                                 <p>
-                                    Upload Png Logo For Company
+                                    Upload Png Logo For contact
                                 </p>
-                                <h6>Logo Limit : 4 MB</h6>
+                                <h6>Logo Limit : 6 MB</h6>
                             </div>
 
 
@@ -81,18 +57,22 @@
                     </div>
 
 
+
+
+
+
                     <div class="row">
                         
                         <div class="col-md-3">
                             <div>
-                                <h6 class="add-new-company-page__label">Company Name</h6>
+                                <h6 class="add-new-company-page__label">Name</h6>
                                 <el-form-item
                                     prop="name"
                                     :rules="[
                                         { required: true, message: 'name is required'},
                                     ]"
                                 >
-                                    <el-input v-model="addCompanyInfo.name"></el-input>
+                                    <el-input v-model="addContactInfo.name"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -109,7 +89,7 @@
                                         { required: true, type: 'email' , message: 'email not valid'},
                                     ]"
                                 >
-                                    <el-input v-model="addCompanyInfo.email"></el-input>
+                                    <el-input v-model="addContactInfo.email"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -126,7 +106,7 @@
                                         { required: true, message: 'phone is required'},
                                     ]"
                                 >
-                                    <el-input v-model="addCompanyInfo.phone"></el-input>
+                                    <el-input v-model="addContactInfo.phone"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -136,14 +116,28 @@
 
                         <div class="col-md-3">
                             <div>
+                                <h6 class="add-new-company-page__label">Position</h6>
+                                <el-form-item
+                                    prop="position"
+                                    :rules="[
+                                        { required: true, message: 'position is required'},
+                                    ]"
+                                >
+                                    <el-input v-model="addContactInfo.position"></el-input>
+                                </el-form-item>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-3">
+                            <div>
                                 <h6 class="add-new-company-page__label">Facebook Url</h6>
                                 <el-form-item
                                     prop="facebookUrl"
-                                    :rules="[
-                                        { required: true, message: 'facebook Url is required'},
-                                    ]"
+                                   
                                 >
-                                    <el-input v-model="addCompanyInfo.facebookUrl"></el-input>
+                                    <el-input v-model="addContactInfo.facebookUrl"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -156,11 +150,9 @@
                                 <h6 class="add-new-company-page__label">Instgram Url</h6>
                                 <el-form-item
                                     prop="instgramUrl"
-                                    :rules="[
-                                        { required: true, message: 'instgram Url is required'},
-                                    ]"
+                                   
                                 >
-                                    <el-input v-model="addCompanyInfo.instgramUrl"></el-input>
+                                    <el-input v-model="addContactInfo.instgramUrl"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -173,11 +165,9 @@
                                 <h6 class="add-new-company-page__label">Twitter Url</h6>
                                 <el-form-item
                                     prop="twitterUrl"
-                                    :rules="[
-                                        { required: true, message: 'Twitter Url is required'},
-                                    ]"
+                                   
                                 >
-                                    <el-input v-model="addCompanyInfo.twitterUrl"></el-input>
+                                    <el-input v-model="addContactInfo.twitterUrl"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -189,11 +179,9 @@
                                 <h6 class="add-new-company-page__label">Youtube Url</h6>
                                 <el-form-item
                                     prop="youtubeUrl"
-                                    :rules="[
-                                        { required: true, message: 'Youtube Url is required'},
-                                    ]"
+                                    
                                 >
-                                    <el-input v-model="addCompanyInfo.youtubeUrl"></el-input>
+                                    <el-input v-model="addContactInfo.youtubeUrl"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -205,27 +193,9 @@
                                 <h6 class="add-new-company-page__label">LinkedIn Url</h6>
                                 <el-form-item
                                     prop="linkedInUrl"
-                                    :rules="[
-                                        { required: true, message: 'LinkedIn Url is required'},
-                                    ]"
+                                    
                                 >
-                                    <el-input v-model="addCompanyInfo.linkedInUrl"></el-input>
-                                </el-form-item>
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-md-6">
-                            <div>
-                                <h6 class="add-new-company-page__label">Description</h6>
-                                <el-form-item
-                                    prop="description"
-                                    :rules="[
-                                        { required: true, message: 'description is required'},
-                                    ]"
-                                >
-                                    <el-input v-model="addCompanyInfo.description"></el-input>
+                                    <el-input v-model="addContactInfo.linkedInUrl"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -233,16 +203,61 @@
 
                         <div class="col-md-3">
                             <div>
-                                <h6 class="add-new-company-page__label">Sectors</h6>
+                                <h6 class="add-new-company-page__label">Contact Source</h6>
                                 <el-form-item
-                                    prop="sector"
+                                    prop="contactSource"
                                     :rules="[
-                                        { required: true, message: 'sector is required'},
+                                        { required: true, message: 'contact Source is required'},
                                     ]"
                                 >
-                                    <el-select v-model="addCompanyInfo.sector" placeholder="Select">
+                                    <el-select v-model="addContactInfo.contactSource" placeholder=" ">
                                         <el-option
-                                        v-for="item in sectors"
+                                        v-for="item in contactSources"
+                                        :key="item.value"
+                                        :label="item.text"
+                                        :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div>
+                                <h6 class="add-new-company-page__label">Contact Source Type</h6>
+                                <el-form-item
+                                    prop="contactSourceType"
+                                    :rules="[
+                                        { required: true, message: 'Contact Source Type is required'},
+                                    ]"
+                                >
+                                    <el-select v-model="addContactInfo.contactSourceType" placeholder=" ">
+                                        <el-option
+                                        v-for="item in contactSourceTypes"
+                                        :key="item.value"
+                                        :label="item.text"
+                                        :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-3">
+                            <div>
+                                <h6 class="add-new-company-page__label">Department</h6>
+                                <el-form-item
+                                    prop="contactSourceType"
+                                    :rules="[
+                                        { required: true, message: 'Department is required'},
+                                    ]"
+                                >
+                                    <el-select v-model="addContactInfo.department" placeholder=" ">
+                                        <el-option
+                                        v-for="item in departments"
                                         :key="item.id"
                                         :label="item.name"
                                         :value="item.id">
@@ -253,49 +268,63 @@
                         </div>
 
 
+
+
+
                         <div class="col-md-3">
                             <el-form-item>
-                                <el-button data-submit="company-info" type="primary" @click="submitCompanyInfo('addCompanyInfo')">Save New Company</el-button>
+                                <div class="d-flex add-new-contact-page__contact-btns mt-4">
+                                    <div>
+                                        <el-button data-submit="company-info" type="primary" @click="submitContactInfo('addContactInfo')">Save New Company</el-button>
+                                    </div>
+                                    <div>
+                                        <el-button data-submit="company-info" >Skip For Know</el-button>
+                                    </div>
+                                </div>
+                                
+                                
                             </el-form-item>
                         </div>
 
 
                     </div>
-         
+
+
+
+
+
                 </el-form>
-
-
-            </section>
-
 
           </section>
       </div>
-
-      <CheckAddCompanyNextStep @nextStep="$router.push(`/company/${currCompany.id}`)" :company="currCompany" @close="checkForNextStep = false" v-if="checkForNextStep" :status="companyAvailable" />
   </div>
 </template>
 
 <script>
-import CheckAddCompanyNextStep from '@/components/CheckAddCompanyNextStep';
 export default {
-    components:{CheckAddCompanyNextStep},
     data(){
         return {
-            domainForm: {},
-            currCompany: {},
-            nextStep: false,
-            checkForNextStep: false,
-            companyAvailable: false,
-            addCompanyInfo:{},
-            photo: "",
-            url: ""
+            departments: [],
+            addContactInfo: {},
+            photo: '',
+            url:'',
+            contactSources: [
+                { text: 'Account Manager', value: 'ACCOUNT_MANAGER' },
+                { text: 'Inbound', value: 'INBOUND' },
+            ],
+            contactSourceTypes: [
+                {text: 'Email', value: 'EMAIL'},
+                {text: 'Phone', value: 'PHONE'},
+                {text: 'Linked In', value: 'LINKED_IN'},
+                {text: 'Social Media', value: 'SOCIAL_MEDIA'},
+            ]
         }
     },
     mounted(){
-        this.getSectors();
+        this.getDepartments();
     },
     methods:{
-        getSectors(){
+        getDepartments(){
             const loading = this.$loading({
                 lock: true,
                 text: false,
@@ -303,22 +332,11 @@ export default {
                 background: "rgba(255,255,255,.7)",
                 customClass: "fullscreen-loading",
             });
-
-            this.$axios.get(`/sectors`).then(res => {
-                this.sectors = res.data;
-            }).finally(() => loading.close());
+            this.$axios.get(`/departments`).then(res => {
+                this.departments = res.data;
+            }).finally(() => loading.close())
         },
-        submitCompanyInfo(formName){
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    this.addCompany();
-                }else{
-                    }
-            })
-                    // this.$router.push(`/new-contact`);
-        },
-        addCompany(){
-
+        addContactToCompany(){
             const loading = this.$loading({
                 lock: true,
                 text: false,
@@ -343,46 +361,54 @@ export default {
                 });
                 loading.close();
             });
-            
+
+
             Promise.all([getPhotoJson]).then(() => {
-                this.$axios.post('/companies', {
-                    name: this.addCompanyInfo.name,
-                    email: this.addCompanyInfo.email,
-                    phone: this.addCompanyInfo.phone,
-                    website: this.domainForm.domain,
-                    description: this.addCompanyInfo.description,
-                    sector: this.addCompanyInfo.sector,
-                    socialMedia: [
-                        {name: 'facebook', link: this.addCompanyInfo.facebookUrl},
-                        {name: 'twitter', link: this.addCompanyInfo.twitterUrl},
-                        {name: 'linkedIn', link: this.addCompanyInfo.linkedInUrl},
-                        {name: 'youtube', link: this.addCompanyInfo.youtubeUrl},
-                    ],
-                    logo: photoJson
-                }).then(() => {
+                let social = [];
+                if(this.addContactInfo.facebookUrl){
+                    social.push({name: 'facebook', link: this.addContactInfo.facebookUrl})
+                }
+                if(this.addContactInfo.twitterUrl){
+                    social.push({name: 'twitter', link: this.addContactInfo.twitterUrl})
+                }
+                if(this.addContactInfo.linkedInUrl){
+                    social.push({name: 'linkedIn', link: this.addContactInfo.linkedInUrl})
+                }
+                if(this.addContactInfo.youtubeUrl){
+                    social.push({name: 'youtube', link: this.addContactInfo.youtubeUrl})
+                }
+
+                this.$axios.post(`/contacts`, {
+                    "name": this.addContactInfo.name,
+                    "email": this.addContactInfo.email,
+                    "phone": this.addContactInfo.phone,
+                    "photo": photoJson,
+                    "website": this.$route.query.website,
+                    "contactSource": this.addContactInfo.contactSource,
+                    "contactSourceType": this.addContactInfo.contactSourceType,
+                    "position": this.addContactInfo.position,
+                    "department": this.addContactInfo.department,
+                    "company": this.$route.params.id,
+                    "socialMedia": social,
+                    "website": "www.anything.com",
+                }).then(res => {
                     this.$vs.notification({
                         progress: "auto",
                         color: "success",
                         position: "top-center",
-                        text: `Company Information Saved Successfully`,
+                        text: `Contact Saved Successfully`,
                     });
-                    this.$router.push(`/new-contact?company=${res.data.id}`);
+                    this.$router.push(`/company/${this.$route.params.id}`)
                 }).catch(err => {
-                   
-                   if(err.response.status == 400) {
-                       this.$vs.notification({
-                            progress: "auto",
-                            color: "danger",
-                            position: "top-center",
-                            text: `Phone Number Invalid`,
-                        });
-                   }
-
-                   
+                    this.$vs.notification({
+                        progress: "auto",
+                        color: "danger",
+                        position: "top-center",
+                        text: `There Are Something Wrong`,
+                    });
                 })
-                .finally(() => loading.close())
+                .finally(() => loading.close());
             })
-            
         },
         uploadImg(e){
             if(e.target.files.length > 0){
@@ -390,53 +416,19 @@ export default {
                 this.url = URL.createObjectURL(this.photo);
             }
         },
-        submitForm(formName){
+        submitContactInfo(formName){
             this.$refs[formName].validate((valid) => {
-                if (valid){
-                    this.sendDomain()
-                    // this.checkForNextStep = true;
-                    // this.companyAvailable = true;
-
+                if(valid){
+                    this.addContactToCompany();
                 }
             })
-        },
-        sendDomain(){
-            const loading = this.$loading({
-                lock: true,
-                text: false,
-                spinner: "el-icon-loading",
-                background: "rgba(255,255,255,.7)",
-                customClass: "fullscreen-loading",
-            });
-            this.$axios.get(`/companies?website=${this.domainForm.domain}`).then(res => {
-                if(res.data.docs.length == 0){
-                    this.nextStep = true;
-                }
-                else if (res.data.docs.length == 1){
-                    this.currCompany = {...res.data.docs[0]}
-                    if(this.currCompany.status == 'SALES_TEAM'){
-                        this.companyAvailable = true;
-                        this.checkForNextStep = true;
-                    }else{
-                        this.companyAvailable = false;
-                        this.checkForNextStep = true;
-
-                    }
-                }
-            }).catch(err => {
-                if (err.response.status == 400) {
-                    this.nextStep = true;
-                }
-            })
-            .finally(() => loading.close())
-        },
+        }
     }
 }
 </script>
 
 <style lang="scss">
-
-.add-new-company-page{
+.add-new-contact-page{
     &__breadcrumbs{
         padding-top: 20px;
         display: flex;
@@ -453,36 +445,15 @@ export default {
         }
     }
 
-    &__domain-label{
-        font-weight: 100;
-        color: #707070;
-        font-size: 14px;
-    }
+    
 
-    &__domain-step{
-        .el-form{
-            max-width: 300px;
-            .el-button{
-                width: 100%;
-            }
-        }
+    [data-submit="company-info"]{
+        padding: 12px;
+        margin-top: 3px;
     }
 
 
-    &__company-info{
-        [data-submit="company-info"]{
-            width: 100%;
-            margin-top: 27px;
-            border-radius: 5px;
-                
-        }
-        
-
-
-        
-    }
     &__upload-img{
-        margin-bottom: 25px;
         >div{
             gap: 15px;
             color: #838383;
@@ -491,12 +462,19 @@ export default {
                     &:last-of-type{
                         h6{
                             margin-bottom: 15px;
+                            font-size: 14px;
+                            &.header{
+                                font-size: 19px;
+                                font-weight: 500;
+                                margin-bottom: 10px;
+                            }
                         }
                     }
                 }
                 p{
                         width: 183px;
-                        line-height: 1.4;
+                        font-size: 15px;
+                        margin-bottom: 13px;
                 }
             }
         }
@@ -504,11 +482,12 @@ export default {
     &__img{
         padding: 45px;
         border: 1px solid #ccc;
-        border-radius: 5px;
-        
+        border-radius: 50%;
+     
         position: relative;
         width: 132px;
         height: 132px;
+
         input[type="file"]{
             position: absolute;
             top: 0;
@@ -525,10 +504,26 @@ export default {
             width: 100%;
             height: 100%;
             /* min-height: 126px; */
+            border-radius: 50%;
+            overflow: hidden;
             padding: 3px;
             z-index: -1;
             object-fit: contain;
         }
     }
+
+
+    &__contact-btns{
+        gap: 15px;
+        >div{
+            flex: 1;
+            button{
+                width: 100%;
+            }
+        }
+    }
+
 }
+
+
 </style>

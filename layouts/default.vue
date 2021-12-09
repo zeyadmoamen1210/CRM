@@ -20,7 +20,6 @@ export default {
     src: url('../assets/Segoe-UI-Font/SEGOEUI.TTF');
 }
 
-@import "../assets/scss/override.scss";
 
 * {
   padding: 0;
@@ -28,5 +27,13 @@ export default {
   box-sizing: border-box;
   font-family: 'segoe', Arial , sans-serif;
 }
-
+@import "../assets/scss/override.scss";
+.el-select{
+  width: 100%;
+      .el-select__caret{
+        color: #ffcb05 !important;
+        font-size: 12px !important;
+        font-weight: bold;
+      }
+}
 </style>

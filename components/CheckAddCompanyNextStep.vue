@@ -72,7 +72,7 @@
 
           <p class="text-center">
             This company is in the sales list, you can fill in the data and add
-            it
+            it assigned to ({{company.assigned ? company.assigned.name : ''}})
           </p>
         </div>
       </div>
@@ -88,7 +88,7 @@
 
 <script>
 export default {
-  props: ["status"],
+  props: ["status", 'company'],
   data() {
     return {
       available: false,

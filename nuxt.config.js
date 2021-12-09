@@ -26,6 +26,7 @@ export default {
     '@/plugins/element-ui',
     '@/plugins/bootstrap',
     '@/plugins/vuesax',
+    '@/plugins/moment.js',
     { src : '~/plugins/apexcharts.js', ssr : false },
   ],
 
